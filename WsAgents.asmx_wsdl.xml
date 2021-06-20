@@ -1,0 +1,816 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://htb.kan.mk.lak/WsApi/v04/Agents" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://htb.kan.mk.lak/WsApi/v04/Agents" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://htb.kan.mk.lak/WsApi/v04/Agents">
+      <s:element name="LookupCustomer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="customerkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LookupCustomerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LookupCustomerResult" type="tns:CustomerListDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CustomerListDTO">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDTO">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:ArrayOfCustomerItem" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDTO">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ResponseCode" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseMessage" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseError" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCustomerItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CustomerItem" nillable="true" type="tns:CustomerItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomerItem">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IsVIP" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="SponserKey" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomerKey" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ContactKey" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ServiceKey" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BillProcessingCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreditClass" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CurrencyCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DiscountRate" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="InfoRespKey" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Balance" type="tns:CustomerItemBalance" />
+          <s:element minOccurs="1" maxOccurs="1" name="CreateDateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Transactions" type="tns:ArrayOfTransactionItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomerItemBalance">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PreviousBalance" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="CurrentBilled" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="CurrentCredit" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="CurrentDebit" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="OpenCreditNoteAmount" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="OpenInvoiceAmount" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="OpenPaymentAmount" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="OpenRefundAmount" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="CurrentBalance" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfTransactionItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TransactionItem" nillable="true" type="tns:TransactionItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TransactionItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="BatchNo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RefNo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TransNo" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerKey" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="JournalKey" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="BrowserUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ZESAToken" type="tns:ZESATokenItem" />
+          <s:element minOccurs="0" maxOccurs="1" name="Service" type="tns:ServiceItem" />
+          <s:element minOccurs="1" maxOccurs="1" name="ReversedJournalKey" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PostDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="CashKey" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ZESATokenItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="BillApiData" type="tns:ZESATokenBillItem" />
+          <s:element minOccurs="1" maxOccurs="1" name="WasSuccessful" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="client" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="agentid" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="merchantid" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="referenceid" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="amount" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="clientfees" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="agentfees" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="merchantfees" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="billcompany" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="billid" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="billvoucher" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="billremoteid" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ZESATokenBillItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="mti" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="vendorReference" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="processingCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="transactionAmount" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="transmissionDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="vendorNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="transactionReference" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="responseCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="vendorTerminalId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="merchantName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="customerAddress" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="customerData" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="arrears" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="vendorBalance" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="aggregator" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="meterNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="narrative" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="paymentType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="fixedCharges" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="miscellaneousData" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="vendorBranchId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="currencyCode" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ServiceItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Technology" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Period" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="AmountDue" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="Currency" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ParentNames" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="QuantityMeasure" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Days" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CustomerKey" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ServiceKey" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ParentServiceKey" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="OriginalServiceKey" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Login" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ParentLogin" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProvisionAPI" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ProvisionStatus" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProvisionSecret" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProvisionToken" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReserveRefNo" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Discount" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="DiscountType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DiscountEndDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="ServiceEmail" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ServicePhone" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="LookupService">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="typeOrLoginOrKey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LookupServiceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LookupServiceResult" type="tns:ServiceListDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ServiceListDTO">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDTO">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:ArrayOfServiceItem" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfServiceItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceItem" nillable="true" type="tns:ServiceItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ListServicesForCustomer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="customerkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListServicesForCustomerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListServicesForCustomerResult" type="tns:ServiceListDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListServicesForOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="plan" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListServicesForOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListServicesForOrderResult" type="tns:ServiceListDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MakePayment">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="customerkey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="amount" type="s:decimal" />
+            <s:element minOccurs="0" maxOccurs="1" name="currency" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="description" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referencenumber" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="valuedate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="BillKey" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MakePaymentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MakePaymentResult" type="tns:TransactionListDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TransactionListDTO">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDTO">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Data" type="tns:ArrayOfTransactionItem" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="MakePaymentReversal">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="cashkey" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="journalkey" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="description" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referencenumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MakePaymentReversalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MakePaymentReversalResult" type="tns:TransactionListDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MakeServiceOrder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="customerkey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="amount" type="s:decimal" />
+            <s:element minOccurs="0" maxOccurs="1" name="currency" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="description" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referencenumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="servicename" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="servicelogin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="servicepwd" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MakeServiceOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MakeServiceOrderResult" type="tns:TransactionListDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MakeServicePurchase">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="customerkey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="amount" type="s:decimal" />
+            <s:element minOccurs="0" maxOccurs="1" name="currency" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="description" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="referencenumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="servicename" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="servicelogin" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MakeServicePurchaseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MakeServicePurchaseResult" type="tns:TransactionListDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MakeServiceValidate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="customerkey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="servicename" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="servicelogin" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MakeServiceValidateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MakeServiceValidateResult" type="tns:ServiceListDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ZOLGetRandomString">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="length" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="category" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ZOLGetRandomStringResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ZOLGetRandomStringResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="apitoken" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="idle_timeout" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoginResult" type="tns:LoginDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="LoginDTO">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDTO">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IdleTimeout" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="Logout">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogoutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LogoutResult" type="tns:LoginDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMessage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="from" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="to" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="template" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendMessageResult" type="tns:BaseDTO" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LookupCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:LookupCustomer" />
+  </wsdl:message>
+  <wsdl:message name="LookupCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:LookupCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="LookupServiceSoapIn">
+    <wsdl:part name="parameters" element="tns:LookupService" />
+  </wsdl:message>
+  <wsdl:message name="LookupServiceSoapOut">
+    <wsdl:part name="parameters" element="tns:LookupServiceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListServicesForCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:ListServicesForCustomer" />
+  </wsdl:message>
+  <wsdl:message name="ListServicesForCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:ListServicesForCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListServicesForOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:ListServicesForOrder" />
+  </wsdl:message>
+  <wsdl:message name="ListServicesForOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:ListServicesForOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="MakePaymentSoapIn">
+    <wsdl:part name="parameters" element="tns:MakePayment" />
+  </wsdl:message>
+  <wsdl:message name="MakePaymentSoapOut">
+    <wsdl:part name="parameters" element="tns:MakePaymentResponse" />
+  </wsdl:message>
+  <wsdl:message name="MakePaymentReversalSoapIn">
+    <wsdl:part name="parameters" element="tns:MakePaymentReversal" />
+  </wsdl:message>
+  <wsdl:message name="MakePaymentReversalSoapOut">
+    <wsdl:part name="parameters" element="tns:MakePaymentReversalResponse" />
+  </wsdl:message>
+  <wsdl:message name="MakeServiceOrderSoapIn">
+    <wsdl:part name="parameters" element="tns:MakeServiceOrder" />
+  </wsdl:message>
+  <wsdl:message name="MakeServiceOrderSoapOut">
+    <wsdl:part name="parameters" element="tns:MakeServiceOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="MakeServicePurchaseSoapIn">
+    <wsdl:part name="parameters" element="tns:MakeServicePurchase" />
+  </wsdl:message>
+  <wsdl:message name="MakeServicePurchaseSoapOut">
+    <wsdl:part name="parameters" element="tns:MakeServicePurchaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="MakeServiceValidateSoapIn">
+    <wsdl:part name="parameters" element="tns:MakeServiceValidate" />
+  </wsdl:message>
+  <wsdl:message name="MakeServiceValidateSoapOut">
+    <wsdl:part name="parameters" element="tns:MakeServiceValidateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ZOLGetRandomStringSoapIn">
+    <wsdl:part name="parameters" element="tns:ZOLGetRandomString" />
+  </wsdl:message>
+  <wsdl:message name="ZOLGetRandomStringSoapOut">
+    <wsdl:part name="parameters" element="tns:ZOLGetRandomStringResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapIn">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="LoginSoapOut">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapIn">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="LogoutSoapOut">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:SendMessage" />
+  </wsdl:message>
+  <wsdl:message name="SendMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:SendMessageResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WsAgentsSoap">
+    <wsdl:operation name="LookupCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function enables you to look up customer details by CustomerID (found on a customer's bill). Included in the output is the customer's balance and information</wsdl:documentation>
+      <wsdl:input message="tns:LookupCustomerSoapIn" />
+      <wsdl:output message="tns:LookupCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LookupService">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Prism function enables you to look up service information by service-name.</wsdl:documentation>
+      <wsdl:input message="tns:LookupServiceSoapIn" />
+      <wsdl:output message="tns:LookupServiceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListServicesForCustomer">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Function to list all active services from prism for a given filter e.g Login='xyz' OR Name='xyz'</wsdl:documentation>
+      <wsdl:input message="tns:ListServicesForCustomerSoapIn" />
+      <wsdl:output message="tns:ListServicesForCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListServicesForOrder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Function to list all configured services which can be ordered online for Top-up</wsdl:documentation>
+      <wsdl:input message="tns:ListServicesForOrderSoapIn" />
+      <wsdl:output message="tns:ListServicesForOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MakePayment">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function takes just a few simple parameters to log a cash payment</wsdl:documentation>
+      <wsdl:input message="tns:MakePaymentSoapIn" />
+      <wsdl:output message="tns:MakePaymentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MakePaymentReversal">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This function reverses a previous transaction that was successful</wsdl:documentation>
+      <wsdl:input message="tns:MakePaymentReversalSoapIn" />
+      <wsdl:output message="tns:MakePaymentReversalSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MakeServiceOrder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Prism function takes just a few simple parameters to order a service and process it. This involves MakePayment(Iif applicable), service ordering and processing</wsdl:documentation>
+      <wsdl:input message="tns:MakeServiceOrderSoapIn" />
+      <wsdl:output message="tns:MakeServiceOrderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MakeServicePurchase">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Prism function enables you to do online purchases using account balance.</wsdl:documentation>
+      <wsdl:input message="tns:MakeServicePurchaseSoapIn" />
+      <wsdl:output message="tns:MakeServicePurchaseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MakeServiceValidate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Function enables you to validate a service order for given user options and may return a parent service key where applicable</wsdl:documentation>
+      <wsdl:input message="tns:MakeServiceValidateSoapIn" />
+      <wsdl:output message="tns:MakeServiceValidateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ZOLGetRandomString">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Function to return a random string/word</wsdl:documentation>
+      <wsdl:input message="tns:ZOLGetRandomStringSoapIn" />
+      <wsdl:output message="tns:ZOLGetRandomStringSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Session login function which must be called to get a session token.  After logging in, the session token is presented with most of the other functions to authenticate access to them</wsdl:documentation>
+      <wsdl:input message="tns:LoginSoapIn" />
+      <wsdl:output message="tns:LoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Session logout function, call this when you are done and to expire your session</wsdl:documentation>
+      <wsdl:input message="tns:LogoutSoapIn" />
+      <wsdl:output message="tns:LogoutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMessage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Send message function third parties can use to send sms / email notifications</wsdl:documentation>
+      <wsdl:input message="tns:SendMessageSoapIn" />
+      <wsdl:output message="tns:SendMessageSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WsAgentsSoap" type="tns:WsAgentsSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="LookupCustomer">
+      <soap:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/LookupCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LookupService">
+      <soap:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/LookupService" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListServicesForCustomer">
+      <soap:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/ListServicesForCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListServicesForOrder">
+      <soap:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/ListServicesForOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakePayment">
+      <soap:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/MakePayment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakePaymentReversal">
+      <soap:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/MakePaymentReversal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeServiceOrder">
+      <soap:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/MakeServiceOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeServicePurchase">
+      <soap:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/MakeServicePurchase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeServiceValidate">
+      <soap:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/MakeServiceValidate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZOLGetRandomString">
+      <soap:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/ZOLGetRandomString" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/Logout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMessage">
+      <soap:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/SendMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WsAgentsSoap12" type="tns:WsAgentsSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="LookupCustomer">
+      <soap12:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/LookupCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LookupService">
+      <soap12:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/LookupService" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListServicesForCustomer">
+      <soap12:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/ListServicesForCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListServicesForOrder">
+      <soap12:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/ListServicesForOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakePayment">
+      <soap12:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/MakePayment" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakePaymentReversal">
+      <soap12:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/MakePaymentReversal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeServiceOrder">
+      <soap12:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/MakeServiceOrder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeServicePurchase">
+      <soap12:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/MakeServicePurchase" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeServiceValidate">
+      <soap12:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/MakeServiceValidate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZOLGetRandomString">
+      <soap12:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/ZOLGetRandomString" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap12:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/Logout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMessage">
+      <soap12:operation soapAction="http://htb.kan.mk.lak/WsApi/v04/Agents/SendMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WsAgents">
+    <wsdl:port name="WsAgentsSoap" binding="tns:WsAgentsSoap">
+      <soap:address location="http://api-staging.kan.mk.lak/WsApi/v04/WsAgents.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WsAgentsSoap12" binding="tns:WsAgentsSoap12">
+      <soap12:address location="http://api-staging.kan.mk.lak/WsApi/v04/WsAgents.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
